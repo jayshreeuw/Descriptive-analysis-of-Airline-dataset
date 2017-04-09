@@ -1,0 +1,39 @@
+/*proc means BY  month*/
+
+data airline;
+
+infile "C:\project6250\airline.csv" dsd;
+
+input Year 	Month  DayofMonth DayOfWeek DepTime CRSDepTime	ArrTime CRSArrTime UniqueCarrier $ FlightNum  TailNum $	ActualElapsedTime CRSElapsedTime	AirTime $	ArrDelay	DepDelay	Origin $ Dest $ Distance TaxiIn $	TaxiOut $  Cancelled	CancellationCode $ Diverted CarrierDelay $ 	WeatherDelay $ NASDelay $ 	SecurityDelay $ LateAircraftDelay $;
+
+run;
+
+proc sort data=airline;
+by Month;
+run;
+
+title "selected statistics using proc means of airline data";
+
+proc means data=airline(firstobs=2) n mean std maxdec=2;
+by Month;
+
+var ActualElapsedTime CRSElapsedTime ArrDelay DepDelay Distance;
+run;
+
+/*proc freq BY month*/
+
+data airline;
+
+infile "C:\project6250\airline.csv" dsd;
+
+input Year 	Month  DayofMonth DayOfWeek DepTime CRSDepTime	ArrTime CRSArrTime UniqueCarrier $ FlightNum  TailNum $	ActualElapsedTime CRSElapsedTime	AirTime $	ArrDelay	DepDelay	Origin $ Dest $ Distance TaxiIn $	TaxiOut $  Cancelled	CancellationCode $ Diverted CarrierDelay $ 	WeatherDelay $ NASDelay $ 	SecurityDelay $ LateAircraftDelay $;
+
+proc sort data=airline;
+by Month;
+run;
+
+title "Frequencies of categorical variables";
+proc freq data=airline(firstobs=2);
+by Month;
+tables DayofMonth DayOfWeek UniqueCarrier Origin Dest Cancelled Diverted ;
+run;
